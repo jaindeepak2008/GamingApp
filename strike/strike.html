@@ -1,230 +1,215 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8" />
-    <link rel="stylesheet" href="../assets/css/main.css" />
+	<head>
+		<meta charset="utf-8" />
+		<link rel="stylesheet" href="../assets/css/main.css" />
 
-    <title>Play Strike</title>
-    <style>
-      * {
-        padding: 0;
-        margin: 0;
-      }
-      canvas {
-        background: #eee;
-        display: block;
-        margin: 0 auto;
-      }
-    </style>
-  </head>
-  <body style="background-image: url('backImage.jpg')">
-    <!-- Header -->
-    <header id="header">
-      <div class="inner">
-        <a href="../index.html" class="logo"
-          ><img src="../images/logo.jpeg" width="200" height="80"
-        /></a>
-        <nav id="nav">
-          <a href="../index.html">Home</a>
-          <a href="../fish/fish.html">Fish</a>
-          <a href="strike.html">Strike</a>
-          <a href="../lucky/lucky.html">Lucky</a>
-          <a href="../contactus.html">Contact Us</a>
-        </nav>
-      </div>
-    </header>
-    <a href="#menu" class="navPanelToggle"><span class="fa fa-bars"></span></a>
+		<title>Play Strike</title>
+		<style>* {
+			 padding: 0;
+			 margin: 0;
+		}
+		 canvas {
+			 background: #eee;
+			 display: block;
+			 margin: 0 auto;
+		}
+		</style> 
 
-    <canvas
-      id="myCanvas"
-      width="560"
-      height="420"
-      style="
-        background: url('CanvasBackImage1.jpg');
-        background-size: 100%;
-        height: 100%;
-      "
-    ></canvas>
+	</head>
+	<body style='background-image: url("backImage.jpg");' >
 
-    <script>
-      var canvas = document.getElementById("myCanvas");
-      var ctx = canvas.getContext("2d");
-      var myRoundBall = 14;
-      var x = canvas.width / 2;
-      var y = canvas.height - 30;
-      var dx = 2;
-      var dy = -2;
-      var barHeight = 10;
-      var barWidth = 115;
-      var barX = (canvas.width - barWidth) / 2;
-      var rightSide = false;
-      var leftSide = false;
-      var obstacleRowCount = 6;
-      var obstacleColumnCount = 5;
-      var obstacleWidth = 75;
-      var obstacleHeight = 20;
-      var obstaclePadding = 10;
-      var obstacleOffsetTop = 30;
-      var obstacleOffsetLeft = 30;
-      var score = 0;
-      var lives = 5;
-      var obstacles = [];
-      for (var c = 0; c < obstacleColumnCount; c++) {
-        obstacles[c] = [];
-        for (var r = 0; r < obstacleRowCount; r++) {
-          obstacles[c][r] = { x: 0, y: 0, status: 1 };
-        }
-      }
+				<!-- Header -->
+				<header id="header">
+					<div class="inner">
+						<a href="../index.html" class="logo"><img src="../images/logo.jpeg" width="200" height="80"></a>
+						<nav id="nav">
+							<a href="../index.html">Home</a>
+							<a href="../fish/fish.html">Fish</a>										
+							<a href="strike.html">Strike</a>
+							<a href="../lucky/lucky.html">Lucky</a>
+							<a href="../contactus.html">Contact Us</a>
+						</nav>
+					</div>
+				</header>
+				<a href="#menu" class="navPanelToggle"><span class="fa fa-bars"></span></a>
 
-      document.addEventListener("keydown", downKeyPressed, false);
-      document.addEventListener("keyup", upKeyPressed, false);
-      document.addEventListener("mousemove", mouseMoves, false);
+		<canvas id="myCanvas" width="560" height="420" style="background:url('CanvasBackImage1.jpg'); background-size: 100%; height: 100% " ></canvas>
 
-      function downKeyPressed(e) {
-        if (e.keyCode == 39) {
-          rightSide = true;
-        } //end if
-        else if (e.keyCode == 37) {
-          leftSide = true;
-        } //end else/if
-      } //end function downKeyPressed
+		<script>
+			var canvas = document.getElementById("myCanvas");
+			var ctx = canvas.getContext("2d");
+			var myRoundBall = 14;
+			var x = canvas.width/2;
+			var y = canvas.height-30;
+			var dx = 2;
+			var dy = -2;
+			var barHeight = 10;
+			var barWidth = 115;
+			var barX = (canvas.width-barWidth)/2;
+			var rightSide = false;
+			var leftSide = false;
+			var obstacleRowCount = 6;
+			var obstacleColumnCount = 5;
+			var obstacleWidth = 75;
+			var obstacleHeight = 20;
+			var obstaclePadding = 10;
+			var obstacleOffsetTop = 30;
+			var obstacleOffsetLeft = 30;
+			var score = 0;
+			var lives = 5;
+			var obstacles = [];
+			for(var c=0; c<obstacleColumnCount; c++) {
+				obstacles[c] = [];
+				for(var r=0; r<obstacleRowCount; r++) {
+					obstacles[c][r] = { x: 0, y: 0, status: 1 };
+				}
+			}
 
-      function upKeyPressed(e) {
-        if (e.keyCode == 39) {
-          rightSide = false;
-        } //end if
-        else if (e.keyCode == 37) {
-          leftSide = false;
-        } //end elseif
-      } //end function upKeyPressed
+			document.addEventListener("keydown", downKeyPressed, false);
+			document.addEventListener("keyup", upKeyPressed, false);
+			document.addEventListener("mousemove", mouseMoves, false);
 
-      function mouseMoves(e) {
-        var relativeX = e.clientX - canvas.offsetLeft;
-        if (relativeX > 0 && relativeX < canvas.width) {
-          barX = relativeX - barWidth / 2;
-        } //end if
-      } //end function mouseMoves
+			function downKeyPressed(e) {
+				if(e.keyCode == 39) {
+					rightSide = true;
+				}//end if
+				else if(e.keyCode == 37) {
+					leftSide = true;
+				}//end else/if
+			}//end function downKeyPressed
+			
+			function upKeyPressed(e) {
+				if(e.keyCode == 39) {
+					rightSide = false;
+				}//end if
+				else if(e.keyCode == 37) {
+					leftSide = false;
+				}//end elseif
+			}//end function upKeyPressed
+			
+			function mouseMoves(e) {
+				var relativeX = e.clientX - canvas.offsetLeft;
+				if(relativeX > 0 && relativeX < canvas.width) {
+					barX = relativeX - barWidth/2;
+				}//end if
+			}//end function mouseMoves
+			
+			function isItStrike() {
+				for(var c=0; c<obstacleColumnCount; c++) {
+					for(var r=0; r<obstacleRowCount; r++) {
+						var b = obstacles[c][r];
+						if(b.status == 1) {
+							if(x > b.x && x < b.x+obstacleWidth && y > b.y && y < b.y+obstacleHeight) {
+								dy = -dy;
+								b.status = 0;
+								score++;
+								if(score == obstacleRowCount*obstacleColumnCount) {
+									alert("YOU WIN, CONGRATS!");
+									document.location.reload();
+								}//end innermost if
+							}//end inner if
+						}//end if
+					}//end outer for
+				}//end outermost for
+			}//end function isItStrike
 
-      function isItStrike() {
-        for (var c = 0; c < obstacleColumnCount; c++) {
-          for (var r = 0; r < obstacleRowCount; r++) {
-            var b = obstacles[c][r];
-            if (b.status == 1) {
-              if (
-                x > b.x &&
-                x < b.x + obstacleWidth &&
-                y > b.y &&
-                y < b.y + obstacleHeight
-              ) {
-                dy = -dy;
-                b.status = 0;
-                score++;
-                if (score == obstacleRowCount * obstacleColumnCount) {
-                  alert("YOU WIN, CONGRATS!");
-                  document.location.reload();
-                } //end innermost if
-              } //end inner if
-            } //end if
-          } //end outer for
-        } //end outermost for
-      } //end function isItStrike
+			function roundBall() {
+				ctx.beginPath();
+				ctx.arc(x, y, myRoundBall, 0, Math.PI*2);
+				ctx.fillStyle = "#ffffff";
+				ctx.fill();
+				ctx.closePath();
+			}//end function roundBall
+			
+			function startGamebar() {
+				ctx.beginPath();
+				ctx.rect(barX, canvas.height-barHeight, barWidth, barHeight);
+				ctx.fillStyle = "#ffffff";
+				ctx.fill();
+				ctx.closePath();
+			}//end function startGamebar
+			
+			function startGameobstacles() {
+				for(var c=0; c<obstacleColumnCount; c++) {
+					for(var r=0; r<obstacleRowCount; r++) {
+						if(obstacles[c][r].status == 1) {
+							var obstacleX = (r*(obstacleWidth+obstaclePadding))+obstacleOffsetLeft;
+							var obstacleY = (c*(obstacleHeight+obstaclePadding))+obstacleOffsetTop;
+							obstacles[c][r].x = obstacleX;
+							obstacles[c][r].y = obstacleY;
+							ctx.beginPath();
+							ctx.rect(obstacleX, obstacleY, obstacleWidth, obstacleHeight);
+							ctx.fillStyle = "#ffffff";
+							ctx.fill();
+							ctx.closePath();
+						}//end if
+					}//end inner for
+				}//end outer for
+			}//end function startGameobstacles
+			
+			function startGameGameScore() {
+				ctx.font = "16px Arial";
+				ctx.fillStyle = "#ffffff";
+				ctx.fillText("Score: "+score, 8, 20);
+			}//end function startGameGameScore
+			
+			function startGameMyLives() {
+				ctx.font = "16px Arial";
+				ctx.fillStyle = "#ffffff";
+				ctx.fillText("Lives: "+lives, canvas.width-65, 20);
+			}//end function startGameMyLives
 
-      function roundBall() {
-        ctx.beginPath();
-        ctx.arc(x, y, myRoundBall, 0, Math.PI * 2);
-        ctx.fillStyle = "#ffffff";
-        ctx.fill();
-        ctx.closePath();
-      } //end function roundBall
+			function startGame() {
+				ctx.clearRect(0, 0, canvas.width, canvas.height);
+				startGameobstacles();
+				roundBall();
+				startGamebar();
+				startGameGameScore();
+				startGameMyLives();
+				isItStrike();
 
-      function startGamebar() {
-        ctx.beginPath();
-        ctx.rect(barX, canvas.height - barHeight, barWidth, barHeight);
-        ctx.fillStyle = "#ffffff";
-        ctx.fill();
-        ctx.closePath();
-      } //end function startGamebar
+				if(x + dx > canvas.width-myRoundBall || x + dx < myRoundBall) {
+					dx = -dx;
+				}//end if
+				if(y + dy < myRoundBall) {
+					dy = -dy;
+				}//end if
+				else if(y + dy > canvas.height-myRoundBall) {
+					if(x > barX && x < barX + barWidth) {
+						dy = -dy;
+					}//end elseif
+					else {
+						lives--;
+						if(!lives) {
+							alert("GAME OVER");
+							document.location.reload();
+						}//end if
+						else {
+							x = canvas.width/2;
+							y = canvas.height-30;
+							dx = 3;
+							dy = -3;
+							barX = (canvas.width-barWidth)/2;
+						}//end else
+					}//end else
+				}//end elseif
 
-      function startGameobstacles() {
-        for (var c = 0; c < obstacleColumnCount; c++) {
-          for (var r = 0; r < obstacleRowCount; r++) {
-            if (obstacles[c][r].status == 1) {
-              var obstacleX =
-                r * (obstacleWidth + obstaclePadding) + obstacleOffsetLeft;
-              var obstacleY =
-                c * (obstacleHeight + obstaclePadding) + obstacleOffsetTop;
-              obstacles[c][r].x = obstacleX;
-              obstacles[c][r].y = obstacleY;
-              ctx.beginPath();
-              ctx.rect(obstacleX, obstacleY, obstacleWidth, obstacleHeight);
-              ctx.fillStyle = "#ffffff";
-              ctx.fill();
-              ctx.closePath();
-            } //end if
-          } //end inner for
-        } //end outer for
-      } //end function startGameobstacles
+				if(rightSide && barX < canvas.width-barWidth) {
+					barX += 7;
+				}//end if
+				else if(leftSide && barX > 0) {
+					barX -= 7;
+				}//end else/if
 
-      function startGameGameScore() {
-        ctx.font = "16px Arial";
-        ctx.fillStyle = "#ffffff";
-        ctx.fillText("Score: " + score, 8, 20);
-      } //end function startGameGameScore
+				x += dx;
+				y += dy;
+				requestAnimationFrame(startGame);
+			}//end function startGame
 
-      function startGameMyLives() {
-        ctx.font = "16px Arial";
-        ctx.fillStyle = "#ffffff";
-        ctx.fillText("Lives: " + lives, canvas.width - 65, 20);
-      } //end function startGameMyLives
+			startGame();
+			
+		</script>
 
-      function startGame() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        startGameobstacles();
-        roundBall();
-        startGamebar();
-        startGameGameScore();
-        startGameMyLives();
-        isItStrike();
-
-        if (x + dx > canvas.width - myRoundBall || x + dx < myRoundBall) {
-          dx = -dx;
-        } //end if
-        if (y + dy < myRoundBall) {
-          dy = -dy;
-        } //end if
-        else if (y + dy > canvas.height - myRoundBall) {
-          if (x > barX && x < barX + barWidth) {
-            dy = -dy;
-          } //end elseif
-          else {
-            lives--;
-            if (!lives) {
-              alert("GAME OVER");
-              document.location.reload();
-            } //end if
-            else {
-              x = canvas.width / 2;
-              y = canvas.height - 30;
-              dx = 3;
-              dy = -3;
-              barX = (canvas.width - barWidth) / 2;
-            } //end else
-          } //end else
-        } //end elseif
-
-        if (rightSide && barX < canvas.width - barWidth) {
-          barX += 7;
-        } //end if
-        else if (leftSide && barX > 0) {
-          barX -= 7;
-        } //end else/if
-
-        x += dx;
-        y += dy;
-        requestAnimationFrame(startGame);
-      } //end function startGame
-
-      startGame();
-    </script>
-  </body>
+	</body>
 </html>
